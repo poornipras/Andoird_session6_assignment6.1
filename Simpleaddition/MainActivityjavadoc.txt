@@ -1,0 +1,52 @@
+package com.pooja.actfrag;
+
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+public class MainActivity extends AppCompatActivity implements Simpleaddition.getbundle {
+Button clickme;
+    EditText maintext;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        clickme=(Button)findViewById(R.id.btn_main_act);
+        maintext=(EditText)findViewById(R.id.edit_text_main_act);
+
+        Simpleaddition sa=new Simpleaddition();
+        FragmentManager manager=getFragmentManager();
+        FragmentTransaction transaction=manager.beginTransaction();
+        transaction.add(R.id.fragment_container,sa,"SimpleFragment");
+        transaction.commit();
+
+      clickme.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch(view.getId())
+                {
+                    case R.id.btn_main_act:
+                    String value=maintext.getText().toString();
+                        getbundle(value);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+
+    }
+    @Override
+    public void getbundle(String s)
+    {
+        FragmentManager manager=getFragmentManager();
+        Simpleaddition simpleaddition= (Simpleaddition) manager.findFragmentById(R.id.fragment_container);
+        simpleaddition.changetext(s);
+
+    }
+}
